@@ -6,11 +6,11 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Hexo</title>
+  <title>Archives: 2019/6 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta property="og:type" content="website">
 <meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta property="og:url" content="http://yoursite.com/archives/2019/06/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="article:author" content="Christine Wu">
 <meta name="twitter:card" content="summary">
@@ -151,104 +151,34 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-proxy-lab" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
+  
     
-      <header class="article-header">
-        
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2019" class="archive-year">2019</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2019/06/08/proxy-lab/" class="archive-article-date">
+  	<time datetime="2019-06-08T03:51:22.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-08</time>
+</a>
+        </div>
+    	 
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/06/08/proxy-lab/">proxy_lab</a>
+      <a class="archive-article-title" href="/2019/06/08/proxy-lab/">proxy_lab</a>
     </h1>
   
 
-        
-        <a href="/2019/06/08/proxy-lab/" class="archive-article-date">
-  	<time datetime="2019-06-08T03:51:22.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-08</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="part-a"><a href="#part-a" class="headerlink" title="part a"></a>part a</h3><p>实现一个sequential 代理服务器</p>
-<p>client –&gt; proxy（要实现的） –&gt; end server</p>
-<h5 id="build-http-header"><a href="#build-http-header" class="headerlink" title="build_http_header"></a>build_http_header</h5><p>建立一个新的发给end server 的http请求头</p>
-<h6 id="request-header"><a href="#request-header" class="headerlink" title="request header"></a>request header</h6><p>HTTP request：</p>
-<p>1 <strong>request line</strong> : 【method  URI  version】</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sprintf</span>(request_hdr,REQUESTLINE_HDR_FORMAT,path);</span><br></pre></td></tr></table></figure>
-
-<p>【C 库函数 <code>**int sprintf(char *str, const char *format, ...)**</code> 发送格式化输出到 <strong>str</strong> 所指向的字符串。】</p>
-<p>2 <strong>request header</strong>；E.g. Host: <a href="http://www.aol.com" target="_blank" rel="noopener">www.aol.com</a></p>
-<p>本次lab有具体对于Host, User-agent, Connection 和Proxy-connection 头的要求，实现即可</p>
-<h6 id="Host"><a href="#Host" class="headerlink" title="Host"></a>Host</h6><p>要求：always has a host header</p>
-<p>E.g. Host: <a href="http://www.cmu.edu" target="_blank" rel="noopener">www.cmu.edu</a>   描述了hostname</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(!strncasecmp(buf,host_key,<span class="built_in">strlen</span>(host_key)))<span class="comment">/*Host:*/</span></span><br><span class="line">       &#123;</span><br><span class="line">           <span class="built_in">strcpy</span>(host_hdr,buf);</span><br><span class="line">           <span class="keyword">continue</span>;</span><br><span class="line">       &#125;</span><br></pre></td></tr></table></figure>
-
-<p>【<code>strncasecmp()</code>用来比较参数s1和s2字符串前n个字符，比较时会自动忽略大小写的差异.s1=s2返回0，否则根据大小返回&gt;0 或 &lt;0】</p>
-<h6 id="Connection-Proxy-connection-amp-User-Agent"><a href="#Connection-Proxy-connection-amp-User-Agent" class="headerlink" title="Connection, Proxy-connection &amp; User-Agent"></a>Connection, Proxy-connection &amp; User-Agent</h6><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(!strncasecmp(buf,connection_key,<span class="built_in">strlen</span>(connection_key))</span><br><span class="line">           &amp;&amp;!strncasecmp(buf,proxy_connection_key,<span class="built_in">strlen</span>(proxy_connection_key))</span><br><span class="line">           &amp;&amp;!strncasecmp(buf,user_agent_key,<span class="built_in">strlen</span>(user_agent_key)))</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">strcat</span>(other_hdr,buf);</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<p>【C 库函数 <strong><code>char *strcat(char *dest, const char *src)</code></strong> 把 <strong>src</strong> 所指向的字符串追加到 <strong>dest</strong> 所指向的字符串的结尾】。</p>
-<h5 id="parse-uri"><a href="#parse-uri" class="headerlink" title="parse_uri"></a>parse_uri</h5><p>解析uri，得到end server的hostname，port 和filename</p>
-<h3 id="multiple-concurrent-requests"><a href="#multiple-concurrent-requests" class="headerlink" title="multiple concurrent requests"></a>multiple concurrent requests</h3><p>详见第12章，concurrent programming</p>
-<p>E.g.</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"csapp.h"</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> *<span class="title">thread</span><span class="params">(<span class="keyword">void</span> *vargp)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="keyword">pthread_t</span> tid;</span><br><span class="line">Pthread_create(&amp;tid, <span class="literal">NULL</span>, thread, <span class="literal">NULL</span>);</span><br><span class="line">Pthread_join(tid, <span class="literal">NULL</span>);</span><br><span class="line"><span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> *<span class="title">thread</span><span class="params">(<span class="keyword">void</span> *vargp)</span> <span class="comment">/* Thread routine */</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"Hello, world!\n"</span>);</span><br><span class="line"><span class="keyword">return</span> <span class="literal">NULL</span>;</span><br></pre></td></tr></table></figure>
-
-<p>【<code>int pthread_create(pthread_t *tid, pthread_attr_t *attr, func *f, void *arg)</code></p>
-<p>The pthread_create function creates a new thread and runs the thread routine f in the an input argument of arg. we will always call pthread_create with a NULL attr argument.<br>When pthread_create returns, argument tid contains the ID of the newly<br>created thread.】</p>
-<h5 id="main"><a href="#main" class="headerlink" title="main"></a>main</h5><p>将原本</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">doit(connfd);</span><br><span class="line">Close(connfd);</span><br></pre></td></tr></table></figure>
-
-<p>改成用<code>Pthread_create</code>创建一个进程</p>
-<p>然后在void *thread中执行<code>doit</code> 和 <code>close</code></p>
-<p>需要注意的是在<code>doit</code>之前利用<code>Pthread_detach(pthread_self());</code>将进程手动设置成detached，避免内存泄漏</p>
-<h3 id="caching"><a href="#caching" class="headerlink" title="caching"></a>caching</h3><h5 id="concurrent-programming"><a href="#concurrent-programming" class="headerlink" title="concurrent programming"></a>concurrent programming</h5><h6 id="读写冲突与保护"><a href="#读写冲突与保护" class="headerlink" title="读写冲突与保护"></a>读写冲突与保护</h6><p>【背景知识：Chapter 12.5】</p>
-<p>读写锁</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">volatile</span> <span class="keyword">int</span> cnt = <span class="number">0</span>; <span class="comment">/* Counter */</span></span><br><span class="line"><span class="keyword">sem_t</span> mutex; <span class="comment">/* Semaphore that protects counter */</span></span><br></pre></td></tr></table></figure>
-
-<p>and then initialize it to unity in the main routine:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Sem_init(&amp;mutex, 0, 1); &#x2F;* mutex &#x3D; 1 *&#x2F;</span><br></pre></td></tr></table></figure>
-
-<p>Finally, we protect the update of the shared cnt variable in the thread routine by<br>surrounding it with P and V operations:</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; niters; i++) &#123;</span><br><span class="line">P(&amp;mutex);</span><br><span class="line">cnt++;</span><br><span class="line">V(&amp;mutex);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>【优先权】</p>
-<p>读者写者问题的解决方案一般都有两种不同的侧重：读者优先或者写者优先。简单来说，读者优化就是尽量满足并发的读操作，当已经有线程在读数据的时候，其他读线程无需等待，而写线程需要等待所有正在进行的读操作之后才能执行。写者优先就是尽量满足写操作，尽管写操作不能并发，但是可以排队，优先于等待的读线程获得执行权。</p>
-<p>本次lab采用写者优先</p>
-<p>在读的时候，第一个读cache object的读者就会在 <code>reader_begin</code>函数中锁住 <code>wmutex</code>，阻止对该cache_block 的写入。读者个数（<code>readcnt</code>）++。之后如果还有其他读者，则继续readcnt++。直到所有读者都退出（每次在<code>reader_end</code>中 <code>readcnt</code>–），即<code>readcnt</code>为0，解锁<code>wmutex</code></p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">reader_begin</span><span class="params">(<span class="keyword">int</span> i)</span></span>&#123;</span><br><span class="line">    ......</span><br><span class="line">    cache.cacheobjs[i].readCnt++;</span><br><span class="line">    <span class="keyword">if</span>(cache.cacheobjs[i].readCnt==<span class="number">1</span>) P(&amp;cache.cacheobjs[i].wmutex);</span><br><span class="line">   ......</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">reader_end</span><span class="params">(<span class="keyword">int</span> i)</span></span>&#123;</span><br><span class="line"> ......</span><br><span class="line">    cache.cacheobjs[i].readCnt--;</span><br><span class="line">    <span class="keyword">if</span>(cache.cacheobjs[i].readCnt==<span class="number">0</span>) V(&amp;cache.cacheobjs[i].wmutex);</span><br><span class="line">  ......</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>困惑！queue是什么东西啊！</strong></p>
-<h6 id="concurrent-programming-1"><a href="#concurrent-programming-1" class="headerlink" title="concurrent programming"></a>concurrent programming</h6><p>【signals 背景知识 Chapter 8.5】</p>
-<p>signals</p>
-<p><img src="https://mypics-123-1256778136.cos.ap-chengdu.myqcloud.com/%E5%A5%BD%E5%A5%BD%E5%AD%A6%E4%B9%A0/%E5%A4%A7%E4%BA%8C%E4%B8%8A/ics/proxy/signals.PNG" alt=""></p>
-<p>发送signal</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">kill</span><span class="params">(<span class="keyword">pid_t</span> pid, <span class="keyword">int</span> sig)</span></span>;</span><br></pre></td></tr></table></figure>
-
-<p>接收signal</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">sighandler_t</span> <span class="title">signal</span><span class="params">(<span class="keyword">int</span> signum, <span class="keyword">sighandler_t</span> handler)</span></span>;</span><br><span class="line"> <span class="function"><span class="keyword">void</span> <span class="title">handler</span><span class="params">(<span class="keyword">int</span> sig)</span></span>;</span><br></pre></td></tr></table></figure>
-
-<h5 id="functions"><a href="#functions" class="headerlink" title="functions"></a>functions</h5><h6 id="main-1"><a href="#main-1" class="headerlink" title="main"></a>main</h6><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">signal(SIGPIPE, SIG_IGN);</span><br></pre></td></tr></table></figure>
-
-<p>当服务器close一个连接时，若client端接着发数据。根据TCP协议的规定，会收到一个RST响应，client再往这个服务器发送数据时，系统会发出一个SIGPIPE信号给进程，告诉进程这个连接已经断开了，不要再写了。根据信号的默认处理规则SIGPIPE信号的默认执行动作是terminate(终止、退出),所以client会退出。若不想客户端退出可以把 SIGPIPE设为SIG_IGN</p>
-<h6 id="doit"><a href="#doit" class="headerlink" title="doit"></a>doit</h6><p>1 在得到 client request时，首先查找cache看是否存了对应url</p>
-<p>如果没找到再连接end server</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 2. process request in proxy */</span> </span><br><span class="line">   <span class="comment">/* case 1: the uri is cached, just return the cache content */</span></span><br><span class="line">   <span class="keyword">int</span> cache_index;</span><br><span class="line">   <span class="keyword">if</span>((cache_index=cache_find(origin_url))!=<span class="number">-1</span>)&#123;</span><br><span class="line">       <span class="comment">// read content in cache and give it to connfd</span></span><br><span class="line">       reader_begin(cache_index);      Rio_writen(connfd,cache.cacheobjs[cache_index].cache_obj,<span class="built_in">strlen</span>(cache.cacheobjs[cache_index].cache_obj));</span><br><span class="line">       reader_end(cache_index);</span><br><span class="line">       </span><br><span class="line">       cache_LRU(cache_index);</span><br><span class="line">       <span class="keyword">return</span>;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
-
-<p>首先在cache中查找是否有对应url，如果有的话直接读cache并将对应内容传给connfd即可</p>
-<p>【cache reader】—— 每次读cache都要调用reader_begin 和 reader_end 函数来进行保护</p>
-<p>2 得到end server 返回的内容后先存在cache里，再返回给client</p>
-<p>【注：如果太大那就直接放弃】</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
+        <div class="article-info info-on-right">
+          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -260,343 +190,19 @@
 		</ul>
 	</div>
 
-      
+          
 
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/06/08/proxy-lab/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
+        </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
   
-    <article id="post-诗篇" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
+  
+    </div></section>
+  
+
     
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/05/24/%E8%AF%97%E7%AF%87/">诗篇</a>
-    </h1>
-  
-
-        
-        <a href="/2019/05/24/%E8%AF%97%E7%AF%87/" class="archive-article-date">
-  	<time datetime="2019-05-24T04:23:12.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-24</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h4 id="神的荣耀"><a href="#神的荣耀" class="headerlink" title="神的荣耀"></a>神的荣耀</h4><p>“<strong>我观看你指头所造的天</strong></p>
-<p><strong>并你所陈设的月亮星宿，</strong> </p>
-<p><strong>便说：</strong></p>
-<p><strong>人算什么，你竟顾念他！</strong> </p>
-<p><strong>世人算什么，你竟眷顾他！</strong>” 【诗篇 8:3-4】</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Bible</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/05/24/%E8%AF%97%E7%AF%87/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-The-Psychology-Book" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/05/21/The-Psychology-Book/">The Psychology Book</a>
-    </h1>
-  
-
-        
-        <a href="/2019/05/21/The-Psychology-Book/" class="archive-article-date">
-  	<time datetime="2019-05-21T12:25:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-21</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h4 id="Be-That-Self-One-Truely-is"><a href="#Be-That-Self-One-Truely-is" class="headerlink" title="Be That Self One Truely is"></a>Be That Self One Truely is</h4><p>Real Desperation arises, with growing self-awareness and the deeper levels of despair stem from an acute consciouness of the self, coupled with a profound dislike of it.</p>
-        
-          <a class="article-more-a" href="/2019/05/21/The-Psychology-Book/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Reading</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/05/21/The-Psychology-Book/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-创世纪" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/05/21/%E5%88%9B%E4%B8%96%E7%BA%AA/">创世纪-亚伯拉罕之约</a>
-    </h1>
-  
-
-        
-        <a href="/2019/05/21/%E5%88%9B%E4%B8%96%E7%BA%AA/" class="archive-article-date">
-  	<time datetime="2019-05-21T12:23:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-21</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h4 id="1-立约"><a href="#1-立约" class="headerlink" title="1 立约"></a>1 立约</h4><p>“ 耶和华对亚伯兰说：‘你要离开本地、本族、父家，往我所要指示你的地去。</p>
-<p>Leave your country, your people and yourfather’s household and <strong>go to the land I will show you.</strong> </p>
-<p>我必叫你成为大国。我必赐福给你，叫你的名为大；你也要叫别人得福。 </p>
-<p>为你祝福的，我必赐福与他；那咒诅你的，我必咒诅他。地上的万族都要因你得福。’ ”</p>
-<p>【创世纪 12：1-3】</p>
-        
-          <a class="article-more-a" href="/2019/05/21/%E5%88%9B%E4%B8%96%E7%BA%AA/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Bible</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/05/21/%E5%88%9B%E4%B8%96%E7%BA%AA/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-hello-world" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/05/21/hello-world/">Hello World</a>
-    </h1>
-  
-
-        
-        <a href="/2019/05/21/hello-world/" class="archive-article-date">
-  	<time datetime="2019-05-20T21:45:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-21</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-        
-          <a class="article-more-a" href="/2019/05/21/hello-world/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/05/21/hello-world/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-  
 
 
           </div>
@@ -618,9 +224,9 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
+		isHome: false,
 		isPost: false,
-		isArchive: false,
+		isArchive: true,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
