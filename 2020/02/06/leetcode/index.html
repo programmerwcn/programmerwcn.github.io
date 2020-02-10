@@ -6,13 +6,18 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Tag: Reading | Hexo</title>
+  <title>leetcode | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/tags/Reading/index.html">
+  <meta name="description" content="Greedy AlgorithmFeb 05. T 605Given an array (representing flowerbed, 1 for planted and 0 for free) , test if n flowers can be planted in it according to the rule that no flower should be planted next">
+<meta property="og:type" content="article">
+<meta property="og:title" content="leetcode">
+<meta property="og:url" content="http://yoursite.com/2020/02/06/leetcode/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Greedy AlgorithmFeb 05. T 605Given an array (representing flowerbed, 1 for planted and 0 for free) , test if n flowers can be planted in it according to the rule that no flower should be planted next">
+<meta property="article:published_time" content="2020-02-06T02:56:07.000Z">
+<meta property="article:modified_time" content="2020-02-10T02:46:19.266Z">
 <meta property="article:author" content="Christine Wu">
+<meta property="article:tag" content="Study">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
@@ -149,60 +154,176 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-leetcode" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/05/21/The-Psychology-Book/" class="archive-article-date">
-  	<time datetime="2019-05-21T12:25:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-21</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/05/21/The-Psychology-Book/">The Psychology Book</a>
+    <h1 class="article-title" itemprop="name">
+      leetcode
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2020/02/06/leetcode/" class="archive-article-date">
+  	<time datetime="2020-02-06T02:56:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-06</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Greedy-Algorithm"><a href="#Greedy-Algorithm" class="headerlink" title="Greedy Algorithm"></a>Greedy Algorithm</h2><h4 id="Feb-05-T-605"><a href="#Feb-05-T-605" class="headerlink" title="Feb 05. T 605"></a>Feb 05. T 605</h4><p>Given an array (representing flowerbed, 1 for planted and 0 for free) , test if n flowers can be planted in it according to the rule that no flower should be planted next to each other.</p>
+<a id="more"></a>
+
+<h5 id="algorithm"><a href="#algorithm" class="headerlink" title="algorithm"></a>algorithm</h5><p>Double pointer + Greedy Algorithm</p>
+<p>Find every consecutive 0 sequence and divide its length by 2 to get the maximum number of flowers can be planted in this sequence. Add them all will get the capatibility.</p>
+<h5 id="Tricky"><a href="#Tricky" class="headerlink" title="Tricky"></a>Tricky</h5><p>001 100 –&gt; 1 flower can be planted, length / 2</p>
+<p>1001 –&gt; 0 flower can be planted, length - 1 / 2</p>
+<p>Pay attention to the <strong>boundary conditions！</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"> <span class="function"><span class="keyword">bool</span> <span class="title">canPlaceFlowers</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; flowerbed, <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line"><span class="comment">// marks a 0 sequence</span></span><br><span class="line">    <span class="keyword">int</span> p_start = <span class="number">-1</span>, p_end = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> length = flowerbed.<span class="built_in">size</span>();</span><br><span class="line">    <span class="comment">// the maximum number of flowers to plant and the maximum number of flowers to plant in one sequence</span></span><br><span class="line">    <span class="keyword">int</span> max_num = <span class="number">0</span>, i_max = <span class="number">0</span>;</span><br><span class="line">      </span><br><span class="line">    <span class="keyword">for</span> (p_end = <span class="number">0</span>; p_end &lt; length; p_end ++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (flowerbed[p_end] == <span class="number">1</span>) &#123;</span><br><span class="line">            <span class="comment">// 001 --&gt; able to plant 1 flower</span></span><br><span class="line">            <span class="comment">// 1001 --&gt; able to plant 0 flower</span></span><br><span class="line">            </span><br><span class="line">                i_max = (p_end - p_start - <span class="number">1</span>) / <span class="number">2</span>;</span><br><span class="line">            </span><br><span class="line">            p_start = p_end + <span class="number">1</span>;</span><br><span class="line">            max_num += i_max;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (p_end == length - <span class="number">1</span>) &#123;</span><br><span class="line">            <span class="comment">// 100 --&gt; able to plant 1 flower</span></span><br><span class="line">            i_max = (p_end - p_start + <span class="number">1</span>) / <span class="number">2</span>;</span><br><span class="line">            max_num += i_max;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> (max_num &gt;= n);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h4 id="Feb-06-T-376"><a href="#Feb-06-T-376" class="headerlink" title="Feb 06. T 376"></a>Feb 06. T 376</h4><p>A sequence of numbers is called a <strong>wiggle sequence</strong> if the differences between successive numbers strictly alternate between positive and negative. Given a sequence, find the length of its longest wiggle subsequence.</p>
+<h5 id="Algorithm"><a href="#Algorithm" class="headerlink" title="Algorithm"></a>Algorithm</h5><p>Greedy Algorithm. Go through the array nums, if nums[i] &amp; nums[i - 1] meet the wiggle sequence requirement, length ++ </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">wiggleMaxLength</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> length = nums.<span class="built_in">size</span>();</span><br><span class="line"><span class="comment">// special cases</span></span><br><span class="line">    <span class="keyword">if</span> (length == <span class="number">0</span> || length == <span class="number">1</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> length;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="comment">// initialize flag</span></span><br><span class="line"><span class="keyword">int</span> n = <span class="number">0</span>, flag = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">if</span> (nums[<span class="number">0</span>] &lt; nums[<span class="number">1</span>]) &#123;</span><br><span class="line">            flag = <span class="number">1</span>;</span><br><span class="line">            n = <span class="number">2</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (nums[<span class="number">0</span>] &gt; nums[<span class="number">1</span>]) &#123;</span><br><span class="line">            flag = <span class="number">-1</span>;</span><br><span class="line">            n = <span class="number">2</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            flag = <span class="number">0</span>;</span><br><span class="line">            n = <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line"><span class="comment">// greedy algorithm</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">2</span>; i &lt; length; i++) &#123;</span><br><span class="line"><span class="keyword">if</span> (flag == <span class="number">1</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (nums[i] &lt; nums[i - <span class="number">1</span>]) &#123;</span><br><span class="line">        n ++;</span><br><span class="line">        flag = <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> (flag == <span class="number">-1</span>)&#123;</span><br><span class="line">    <span class="keyword">if</span> (nums[i] &gt; nums[i - <span class="number">1</span>]) &#123;</span><br><span class="line">        n ++;</span><br><span class="line">        flag = <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> ( nums[i] &lt; nums[i - <span class="number">1</span>]) &#123;</span><br><span class="line">            flag = <span class="number">-1</span>;</span><br><span class="line">            n++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (nums[i] &gt; nums[i - <span class="number">1</span>]) &#123;</span><br><span class="line">            flag = <span class="number">1</span>;</span><br><span class="line">            n++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">    <span class="keyword">return</span> n;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="Feb-07-T-55"><a href="#Feb-07-T-55" class="headerlink" title="Feb 07. T 55"></a>Feb 07. T 55</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">canJump</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">          <span class="keyword">int</span> length = nums.<span class="built_in">size</span>();</span><br><span class="line"><span class="keyword">int</span> required_length = length - <span class="number">1</span>;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = length - <span class="number">2</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">    <span class="keyword">if</span> (i + nums[i] &gt;= required_length) &#123;</span><br><span class="line">        required_length = i;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">    <span class="keyword">return</span> (required_length == <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Sorting"><a href="#Sorting" class="headerlink" title="Sorting"></a>Sorting</h2><h4 id="Feb-10-T-75"><a href="#Feb-10-T-75" class="headerlink" title="Feb 10. T 75"></a>Feb 10. T 75</h4><p>An array consists of 0, 1, 2. Sort the array so that the same numbers are adjacent and from small to big.</p>
+<h5 id="Algorithm-1"><a href="#Algorithm-1" class="headerlink" title="Algorithm"></a>Algorithm</h5><ol>
+<li><p>Count the number of 0, 1, 2. Then rewrite the array. Time – 2n</p>
+</li>
+<li><p>Use pointer to record the place of last 0, 1, 2. The swap 0, 1 &amp; 1, 2</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">sortColors</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> length = nums.<span class="built_in">size</span>();</span><br><span class="line"><span class="keyword">int</span> pos_0 = <span class="number">-1</span>, pos_2 = length;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; pos_2; i++) &#123;</span><br><span class="line">    <span class="keyword">if</span> (nums[i] == <span class="number">0</span>) &#123;</span><br><span class="line">        pos_0 ++;</span><br><span class="line">        swap(nums[pos_0],nums[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (nums[i] == <span class="number">2</span>) &#123;</span><br><span class="line">       pos_2 --;</span><br><span class="line">       swap(nums[pos_2], nums[i]);</span><br><span class="line">       i --;</span><br><span class="line">    &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Reading</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Study</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/02/06/leetcode/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/2019/06/08/proxy-lab/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">proxy_lab</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -225,9 +346,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,

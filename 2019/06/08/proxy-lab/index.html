@@ -8,15 +8,15 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>proxy_lab | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="part a实现一个sequential 代理服务器 client –&gt; proxy（要实现的） –&gt; end server build_http_header建立一个新的发给end server 的http请求头 request headerHTTP request： 1 request line : 【method  URI  version】 1sprintf(request_h">
+  <meta name="description" content="part a实现一个sequential 代理服务器 client –&gt; proxy（要实现的） –&gt; end server">
 <meta property="og:type" content="article">
 <meta property="og:title" content="proxy_lab">
 <meta property="og:url" content="http://yoursite.com/2019/06/08/proxy-lab/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="part a实现一个sequential 代理服务器 client –&gt; proxy（要实现的） –&gt; end server build_http_header建立一个新的发给end server 的http请求头 request headerHTTP request： 1 request line : 【method  URI  version】 1sprintf(request_h">
+<meta property="og:description" content="part a实现一个sequential 代理服务器 client –&gt; proxy（要实现的） –&gt; end server">
 <meta property="og:image" content="https://mypics-123-1256778136.cos.ap-chengdu.myqcloud.com/%E5%A5%BD%E5%A5%BD%E5%AD%A6%E4%B9%A0/%E5%A4%A7%E4%BA%8C%E4%B8%8A/ics/proxy/signals.PNG">
 <meta property="article:published_time" content="2019-06-08T03:51:22.000Z">
-<meta property="article:modified_time" content="2020-02-06T02:50:26.758Z">
+<meta property="article:modified_time" content="2020-02-06T02:58:07.769Z">
 <meta property="article:author" content="Christine Wu">
 <meta property="article:tag" content="Study, ICS">
 <meta name="twitter:card" content="summary">
@@ -178,14 +178,14 @@
       
         <h3 id="part-a"><a href="#part-a" class="headerlink" title="part a"></a>part a</h3><p>实现一个sequential 代理服务器</p>
 <p>client –&gt; proxy（要实现的） –&gt; end server</p>
+<a id="more"></a>
+
 <h5 id="build-http-header"><a href="#build-http-header" class="headerlink" title="build_http_header"></a>build_http_header</h5><p>建立一个新的发给end server 的http请求头</p>
 <h6 id="request-header"><a href="#request-header" class="headerlink" title="request header"></a>request header</h6><p>HTTP request：</p>
 <p>1 <strong>request line</strong> : 【method  URI  version】</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sprintf</span>(request_hdr,REQUESTLINE_HDR_FORMAT,path);</span><br></pre></td></tr></table></figure>
 
 <p>【C 库函数 <code>**int sprintf(char *str, const char *format, ...)**</code> 发送格式化输出到 <strong>str</strong> 所指向的字符串。】</p>
-<a id="more"></a>
-
 <p>2 <strong>request header</strong>；E.g. Host: <a href="http://www.aol.com" target="_blank" rel="noopener">www.aol.com</a></p>
 <p>本次lab有具体对于Host, User-agent, Connection 和Proxy-connection 头的要求，实现即可</p>
 <h6 id="Host"><a href="#Host" class="headerlink" title="Host"></a>Host</h6><p>要求：always has a host header</p>
@@ -331,6 +331,15 @@
   
 <nav id="article-nav">
   
+    <a href="/2020/02/06/leetcode/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          leetcode
+        
+      </div>
+    </a>
+  
   
     <a href="/2019/05/24/%E8%AF%97%E7%AF%87/" id="article-nav-older" class="article-nav-link-wrap">
       <div class="article-nav-title">诗篇</div>
@@ -468,6 +477,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Bible</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Study</a>
               </li>
             
             <div class="clearfix"></div>
