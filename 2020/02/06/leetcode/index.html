@@ -16,8 +16,9 @@
 <meta property="og:description" content="Greedy AlgorithmFeb 05. T 605Given an array (representing flowerbed, 1 for planted and 0 for free) , test if n flowers can be planted in it according to the rule that no flower should be planted next">
 <meta property="og:image" content="https://mypics-123-1256778136.cos.ap-chengdu.myqcloud.com/%E5%A5%BD%E5%A5%BD%E5%AD%A6%E4%B9%A0/leetcode/Screen%20Shot%202020-02-12%20at%2010.19.42%20AM.png">
 <meta property="og:image" content="https://mypics-123-1256778136.cos.ap-chengdu.myqcloud.com/%E5%A5%BD%E5%A5%BD%E5%AD%A6%E4%B9%A0/leetcode/T%2042.png">
+<meta property="og:image" content="https://mypics-123-1256778136.cos.ap-chengdu.myqcloud.com/%E5%A5%BD%E5%A5%BD%E5%AD%A6%E4%B9%A0/leetcode/T%2084.png">
 <meta property="article:published_time" content="2020-02-06T02:56:07.000Z">
-<meta property="article:modified_time" content="2020-02-19T09:11:49.144Z">
+<meta property="article:modified_time" content="2020-02-20T04:23:58.019Z">
 <meta property="article:author" content="Christine Wu">
 <meta property="article:tag" content="Study">
 <meta name="twitter:card" content="summary">
@@ -324,7 +325,11 @@
 <p>Bascially sorting, but according to the priciple that *<u>a &gt; b iff ab &gt; ba</u>* ( a, b are string )</p>
 <h4 id="Feb-18-T-42"><a href="#Feb-18-T-42" class="headerlink" title="Feb 18. T 42"></a>Feb 18. T 42</h4><p><img src="https://mypics-123-1256778136.cos.ap-chengdu.myqcloud.com/%E5%A5%BD%E5%A5%BD%E5%AD%A6%E4%B9%A0/leetcode/T%2042.png" alt=""></p>
 <h5 id="Modeling"><a href="#Modeling" class="headerlink" title="Modeling"></a>Modeling</h5><p>For each element in the array, we find the maximum level of water it can trap after the rain, which is equal to <strong><em>the minimum of maximum height of bars on both the sides minus its own height.</em></strong></p>
-<h4 id="Feb-19-T-57"><a href="#Feb-19-T-57" class="headerlink" title="Feb 19. T 57"></a>Feb 19. T 57</h4>
+<h4 id="Feb-19-T-57"><a href="#Feb-19-T-57" class="headerlink" title="Feb 19. T 57"></a>Feb 19. T 57</h4><h4 id="Feb-20-T-84"><a href="#Feb-20-T-84" class="headerlink" title="Feb 20. T 84"></a>Feb 20. T 84</h4><p><img src="https://mypics-123-1256778136.cos.ap-chengdu.myqcloud.com/%E5%A5%BD%E5%A5%BD%E5%AD%A6%E4%B9%A0/leetcode/T%2084.png" alt=""></p>
+<p>For each bar, find the largest rectangle of its height. O(n*n)</p>
+<p>Improvement: <strong><em>Using a incremental stack to help find the boundaries.</em></strong> – If the current bar’s height &lt; the height of the bar at the peek, pop, compute the area of largest rectangle with the poped bar’s height.</p>
+<p>O(n)</p>
+
       
 
       
